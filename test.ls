@@ -26,7 +26,7 @@ tap1 = -> test-stream do
 tap2 = -> test-stream do
   """
   TAP version 13
-  1..1
+  1..2
   # Hello again
   ok 1 - what
   # Hello again
@@ -36,7 +36,7 @@ tap2 = -> test-stream do
 tap2stuff = -> test-stream do
   """
   TAP version 13
-  1..1
+  1..2
   # Hello again
   ok 1 - what
   ---

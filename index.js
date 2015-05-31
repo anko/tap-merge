@@ -1,59 +1,61 @@
 #!/usr/bin/env node
 
-var parser   = require("tap-parser");
-var duplexer = require("duplexer2");
-var through  = require("through2");
+var _ = require("highland");
 
 module.exports = function() {
 
-    var tap = parser();
-    var out = through();
+    var plan = { start : 0, end : 0 };
+    var previousId = 0;
 
-    var idCounter = 0;
-    var plan      = {};
+    var seenFirstVersionHeader = false;
 
-    out.push("TAP version 13\n");
+    return _.pipeline(_.split(),
+                      _.map(renumber),
+                      _.reject(isNull),
+                      _.consume(addFinalPlan),
+                      _.intersperse("\n"));
 
-    // Deliberately detecting the "TAP version 13" line in the `line` callback.
-    // This is because the input stream is just a concatenation of two TAP
-    // streams and the parser (quite correctly) doesn't treat repetitions of
-    // the initial header as "version" events.
-
-    //tap.on("version", function() { });
-
-    tap.on("line", function(line) {
-        if (line.trim().match(/^TAP version 13$/)) {
-            if (plan.end) {
-                if (idCounter != 0) {
-                    idCounter = plan.end + 1;
-                } else throw Error("Next version-line encountered, "
-                                 + "but no plan for previous set")
+    function renumber(line) {
+        var m = line.match(/^((?:not )?ok)(?:\s+(\d+))?\s+(.*)$/);
+        if (m) { // Matches assert
+            var okString = m[1];
+            var id       = parseInt(m[2], 10);
+            var rest     = m[3];
+            var nextId = ++previousId;
+            return okString + " " + nextId + " " + rest;
+        } else {
+            var m = line.match(/^(\d+)..(\d+)$/);
+            if (m) { // Matches test plan
+                var start = parseInt(m[1], 10);
+                var end   = parseInt(m[2], 10);
+                plan.start = start;
+                plan.end   += end;
+                nextId = start;
+                return null;
+            } else {
+                if (line === "TAP version 13") { // Matches version string
+                    if ( ! seenFirstVersionHeader ) {
+                        seenFirstVersionHeader = true;
+                        return line;
+                    } else return null;
+                }
             }
         }
-    });
+        return line;
+    }
 
-    tap.on("plan", function(res) { plan.end = res.end; });
-    tap.on("assert", function(res) {
+    function addFinalPlan(err, x, push, next) {
+        if (err) {
+            push(err);
+            next();
+        } else if (x === _.nil) { // Ended
+            push(null, "" + (plan.start ? plan.start : 0) + ".." + plan.end);
+            push(null, x);
+        } else {
+            push(null, x);
+            next();
+        }
+    }
 
-        idCounter++;
-
-        out.push("" + (res.ok ? "ok" : "not ok")
-                + " " + idCounter
-                + " - " + res.name + "\n");
-    });
-    tap.on("extra", function(extra) {
-        if (!(extra === "TAP version 13\n" || extra.match(/^\d+..\d+\n$/)))
-            out.push(extra);
-    });
-    tap.on("comment", function(comment) {
-        out.push(comment);
-    });
-    tap.on("complete", function() {
-        var initialIndex = (idCounter > 0) ? 1 : 0;
-        out.push("" + initialIndex + ".." + idCounter + "\n");
-        out.push(null);
-    });
-
-    var dup = duplexer(tap, out);
-    return dup;
+    function isNull(line) { return line === null }
 };
