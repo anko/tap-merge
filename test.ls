@@ -33,6 +33,16 @@ tap2 = -> test-stream do
   ok 2 - what else
   """
 
+tap2fail = -> test-stream do
+  """
+  TAP version 13
+  1..2
+  # Hello again
+  ok 1 - what
+  # Hello again
+  not ok 2 - FAIL
+  """
+
 tap2stuff = -> test-stream do
   """
   TAP version 13
@@ -118,6 +128,32 @@ test "two streams passthrough" (t) ->
         ok 1 - what
         # Hello again
         ok 2 - what else
+        # Hello again
+        ok 3 - what
+        # Hello again
+        ok 4 - what else
+        1..4
+        """
+      t.end!
+
+test "two streams passthrough (first fails one)" (t) ->
+  t.plan 1
+  c = combined.create!
+    ..append tap2fail!
+    ..append test-stream "\n"
+    ..append tap2!
+
+  c
+    .pipe tap-merge!
+    .pipe concat (output) ->
+      t.equals do
+        output.to-string!trim!
+        """
+        TAP version 13
+        # Hello again
+        ok 1 - what
+        # Hello again
+        not ok 2 - FAIL
         # Hello again
         ok 3 - what
         # Hello again
