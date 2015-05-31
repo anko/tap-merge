@@ -14,6 +14,13 @@ module.exports = function() {
 
     out.push("TAP version 13\n");
 
+    // Deliberately detecting the "TAP version 13" line in the `line` callback.
+    // This is because the input stream is just a concatenation of two TAP
+    // streams and the parser (quite correctly) doesn't treat repetitions of
+    // the initial header as "version" events.
+
+    //tap.on("version", function() { });
+
     tap.on("line", function(line) {
         if (line.trim().match(/^TAP version 13$/)) {
             if (plan.end) {
@@ -25,7 +32,6 @@ module.exports = function() {
         }
     });
 
-    //tap.on("version", function() { });
     tap.on("plan", function(res) { plan.end = res.end; });
     tap.on("assert", function(res) {
 
