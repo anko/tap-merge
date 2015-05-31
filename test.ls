@@ -36,6 +36,7 @@ test "single stream passthrough" (t) ->
       t.equals do
         output.to-string!trim!
         """
+        TAP version 13
         # Hi there
         ok 1 - what
         1..1
@@ -55,6 +56,7 @@ test "two streams passthrough" (t) ->
       t.equals do
         output.to-string!trim!
         """
+        TAP version 13
         # Hi there
         ok 1 - what
         # Hello again

@@ -13,6 +13,8 @@ module.exports = function() {
     var idCounter = 0;
     var plan      = {};
 
+    out.push("TAP version 13\n");
+
     tap.on("line", function(line) {
         if (line.trim().match(/^TAP version 13$/)) {
             if (plan.end) {
