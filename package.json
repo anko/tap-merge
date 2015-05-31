@@ -6,6 +6,9 @@
   "scripts": {
     "test": "lsc test.ls"
   },
+  "bin" : {
+      "tap-merge" : "./cli.js"
+  },
   "author": "Anko <an@cyan.io>",
   "license": "ISC",
   "dependencies": {
