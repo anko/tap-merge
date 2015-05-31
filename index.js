@@ -9,7 +9,6 @@ module.exports = function() {
     var tap = parser();
     var out = through();
 
-    var idShift   = 0;
     var idCounter = 0;
     var plan      = {};
 
@@ -19,7 +18,6 @@ module.exports = function() {
         if (line.trim().match(/^TAP version 13$/)) {
             if (plan.end) {
                 if (idCounter != 0) {
-                    idShift++;
                     idCounter = plan.end + 1;
                 } else throw Error("Next version-line encountered, "
                                  + "but no plan for previous set")
@@ -28,29 +26,25 @@ module.exports = function() {
     });
 
     //tap.on("version", function() { });
-    tap.on("plan", function(res) {
-        plan.end = res.end;
-    });
+    tap.on("plan", function(res) { plan.end = res.end; });
     tap.on("assert", function(res) {
 
-        if (res.id) idCounter = res.id;
-        else idCounter++;
+        idCounter++;
 
         out.push("" + (res.ok ? "ok" : "not ok")
-                + " " + (idShift + res.id)
+                + " " + idCounter
                 + " - " + res.name + "\n");
     });
     tap.on("extra", function(extra) {
-        if (!(extra === "TAP version 13\n" || extra.match(/^\d+..\d+\n$/))) {
+        if (!(extra === "TAP version 13\n" || extra.match(/^\d+..\d+\n$/)))
             out.push(extra);
-         }
-    }); // Ignore
+    });
     tap.on("comment", function(comment) {
         out.push(comment);
     });
     tap.on("complete", function() {
         var initialIndex = (idCounter > 0) ? 1 : 0;
-        out.push("" + initialIndex + ".." + (idCounter + idShift) + "\n");
+        out.push("" + initialIndex + ".." + idCounter + "\n");
         out.push(null);
     });
 

@@ -103,7 +103,7 @@ test "single stream passthrough with yaml and child tests" (t) ->
 test "two streams passthrough" (t) ->
   t.plan 1
   c = combined.create!
-    ..append tap1!
+    ..append tap2!
     ..append test-stream "\n"
     ..append tap2!
 
@@ -114,12 +114,14 @@ test "two streams passthrough" (t) ->
         output.to-string!trim!
         """
         TAP version 13
-        # Hi there
+        # Hello again
         ok 1 - what
         # Hello again
-        ok 2 - what
+        ok 2 - what else
         # Hello again
-        ok 3 - what else
-        1..3
+        ok 3 - what
+        # Hello again
+        ok 4 - what else
+        1..4
         """
       t.end!
