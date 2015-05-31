@@ -13,7 +13,8 @@ module.exports = function() {
                       _.map(renumber),
                       _.reject(isNull),
                       _.consume(addFinalPlan),
-                      _.intersperse("\n"));
+                      _.intersperse("\n"),
+                      _.append("\n"));
 
     function renumber(line) {
         var m = line.match(/^((?:not )?ok)(?:\s+(\d+))?\s+(.*)$/);
