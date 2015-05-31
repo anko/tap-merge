@@ -40,7 +40,11 @@ module.exports = function() {
                 + " " + (idShift + res.id)
                 + " - " + res.name + "\n");
     });
-    tap.on("extra", function(extra) { }); // Ignore
+    tap.on("extra", function(extra) {
+        if (!(extra === "TAP version 13\n" || extra.match(/^\d+..\d+\n$/))) {
+            out.push(extra);
+         }
+    }); // Ignore
     tap.on("comment", function(comment) {
         out.push(comment);
     });

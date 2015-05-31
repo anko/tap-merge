@@ -28,6 +28,22 @@ tap2 = -> test-stream do
   ok 2 - what else
   """
 
+tap2stuff = -> test-stream do
+  """
+  TAP version 13
+  1..1
+  # Hello again
+  ok 1 - what
+  ---
+  message: "Failed somewhere"
+  ---
+  # Hello again
+  ok 2 - what else
+      1..2
+      ok 1 - yep
+      ok 2 - yep2
+  """
+
 test "single stream passthrough" (t) ->
   t.plan 1
   tap1!
@@ -40,6 +56,29 @@ test "single stream passthrough" (t) ->
         # Hi there
         ok 1 - what
         1..1
+        """
+      t.end!
+
+test "single stream passthrough with yaml and child tests" (t) ->
+  t.plan 1
+  tap2stuff!
+    .pipe tap-merge!
+    .pipe concat (output) ->
+      t.equals do
+        output.to-string!trim!
+        """
+        TAP version 13
+        # Hello again
+        ok 1 - what
+        ---
+        message: "Failed somewhere"
+        ---
+        # Hello again
+        ok 2 - what else
+            1..2
+            ok 1 - yep
+            ok 2 - yep2
+        1..2
         """
       t.end!
 
