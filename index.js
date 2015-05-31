@@ -9,27 +9,41 @@ module.exports = function() {
     var tap = parser();
     var out = through();
 
-    //tap.on("line", function() { console.error(arguments); });
+    var idShift   = 0;
+    var idCounter = 0;
+    var plan      = {};
+
+    tap.on("line", function(line) {
+        if (line.trim().match(/^TAP version 13$/)) {
+            if (plan.end) {
+                if (idCounter != 0) {
+                    idShift++;
+                    idCounter = plan.end + 1;
+                } else throw Error("Next version-line encountered, "
+                                 + "but no plan for previous set")
+            }
+        }
+    });
 
     //tap.on("version", function() { });
-    tap.on("comment", function(comment) {
-    });
     tap.on("plan", function(res) {
-        out.push("" + res.start + ".." + res.end + "\n");
+        plan.end = res.end;
     });
     tap.on("assert", function(res) {
+
+        if (res.id) idCounter = res.id;
+        else idCounter++;
+
         out.push("" + (res.ok ? "ok" : "not ok")
-                + " " + res.id + " - " + res.name + "\n");
+                + " " + (idShift + res.id)
+                + " - " + res.name + "\n");
     });
-    tap.on("extra", function(extra) {
-        // Some random stuff in the stream that the parser didn't recognise
-        // otherwise!  Whatever :shipit:; user knows what they're doing.
-        out.push(extra);
-    });
+    tap.on("extra", function(extra) { }); // Ignore
     tap.on("comment", function(comment) {
         out.push(comment);
     });
     tap.on("complete", function() {
+        out.push("1.." + (idCounter + idShift) + "\n");
         out.push(null);
     });
 
