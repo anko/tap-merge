@@ -1,17 +1,17 @@
 # tap-merge
 
-Merge multiple [TAP 13][1] streams into one.
+Merge [TAP 13][1] streams.
 
 Re-numbers tests and test plans to remove conficts.  The test plan (e.g.
-`1..5`) line is emitted last.
-
-Can be used from the command line or as a module.
+`1..5`) line is emitted last.  Can be used from the command line or as a
+module.
 
 ## CLI usage
 
     tap-merge <(tapProducer1) <(tapProducer2)
 
-or otherwise concatenate two TAP streams and feed them on `stdin`.
+or otherwise concatenate two TAP streams and feed them on `stdin` to
+`tap-merge`.
 
 ## Module usage
 
@@ -24,6 +24,9 @@ process.stdin              // or any other readable stream
 
 ## Limitations
 
-Doesn't validate.  Provide valid input.
+**Doesn't do validation.**  Provide valid input.
+
+## [ISC license][2]
 
 [1]: https://testanything.org/tap-version-13-specification.html
+[2]: http://en.wikipedia.org/wiki/ISC_license
