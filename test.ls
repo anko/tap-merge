@@ -11,6 +11,11 @@ test-stream = (output) ->
     ..push output
     ..push null
 
+empty-tap = -> test-stream do
+  """
+  TAP version 13
+  0..0
+  """
 tap1 = -> test-stream do
   """
   TAP version 13
@@ -43,6 +48,19 @@ tap2stuff = -> test-stream do
       ok 1 - yep
       ok 2 - yep2
   """
+
+test "empty stream" (t) ->
+  t.plan 1
+  empty-tap!
+    .pipe tap-merge!
+    .pipe concat (output) ->
+      t.equals do
+        output.to-string!trim!
+        """
+        TAP version 13
+        0..0
+        """
+      t.end!
 
 test "single stream passthrough" (t) ->
   t.plan 1

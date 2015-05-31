@@ -49,7 +49,8 @@ module.exports = function() {
         out.push(comment);
     });
     tap.on("complete", function() {
-        out.push("1.." + (idCounter + idShift) + "\n");
+        var initialIndex = (idCounter > 0) ? 1 : 0;
+        out.push("" + initialIndex + ".." + (idCounter + idShift) + "\n");
         out.push(null);
     });
 
