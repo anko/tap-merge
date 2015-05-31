@@ -1,15 +1,18 @@
 {
   "name": "tap-merge",
-  "version": "0.0.0",
-  "description": "Merge multiple tap streams into one",
+  "version": "0.1.0",
+  "description": "Merge multiple TAP streams into one",
   "main": "index.js",
   "scripts": {
     "test": "lsc test.ls"
   },
-  "bin" : {
+  "bin": {
       "tap-merge" : "./cli.js"
   },
-  "author": "Anko <an@cyan.io>",
+  "files": [
+      "index.js"
+  ],
+  "author": "An <an@cyan.io>",
   "license": "ISC",
   "dependencies": {
     "duplexer2": "0.0.2",
