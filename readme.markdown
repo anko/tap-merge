@@ -2,8 +2,8 @@
 
 Merge multiple [TAP 13][1] streams into one.
 
-Essentially just re-numbers tests to remove conficts.  The plan (e.g. `1..5`)
-line is emitted last.
+Re-numbers tests and test plans to remove conficts.  The test plan (e.g.
+`1..5`) line is emitted last.
 
 Can be used from the command line or as a module.
 
