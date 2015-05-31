@@ -1,6 +1,6 @@
 {
   "name": "tap-merge",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Merge multiple TAP streams into one",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "tap-merge": "./cli.js"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "cli.js"
   ],
   "author": "An <an@cyan.io>",
   "license": "ISC",
