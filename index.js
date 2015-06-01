@@ -16,32 +16,37 @@ module.exports = function() {
                       _.append("\n"));
 
     function renumber(line) {
-        var m = line.match(/^((?:not )?ok)(?:\s+(\d+))?\s+(.*)$/);
-        if (m) { // Matches assert
+
+        var m;
+
+        // Matches assert
+        if (m = line.match(/^((?:not )?ok)(?:\s+(\d+))?\s+(.*)$/)) {
+
             var okString = m[1];
             var id       = parseInt(m[2], 10);
             var rest     = m[3];
             var nextId = ++previousId;
             return okString + " " + nextId + " " + rest;
-        } else {
-            var m = line.match(/^(\d+)..(\d+)$/);
-            if (m) { // Matches test plan
-                var start = parseInt(m[1], 10);
-                var end   = parseInt(m[2], 10);
-                plan.start = start;
-                plan.end   += end;
-                nextId = start;
-                return null;
-            } else {
-                if (line === "TAP version 13") { // Matches version string
-                    if ( ! seenFirstVersionHeader ) {
-                        seenFirstVersionHeader = true;
-                        return line;
-                    } else return null;
-                }
-            }
-        }
-        return line;
+
+        // Matches plan
+        } else if (m = line.match(/^(\d+)..(\d+)$/)) {
+
+            var start = parseInt(m[1], 10);
+            var end   = parseInt(m[2], 10);
+            plan.start = start;
+            plan.end   += end;
+            nextId = start;
+            return null;
+
+        // Matches version header
+        } else if (line === "TAP version 13") {
+
+            if ( ! seenFirstVersionHeader ) {
+                seenFirstVersionHeader = true;
+                return line;
+            } else return null;
+
+        } else return line; // Everything else: passthrough
     }
 
     function addFinalPlan(err, x, push, next) {
