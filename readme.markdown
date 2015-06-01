@@ -42,10 +42,8 @@ ok 3 - yep
 
 TAP version 13
 1..2
-# two-one
 not ok 1 - fail
-# two-two
-ok 2 - yep
+ok 2 - just fine
 ```
 
 Output (one TAP stream; conflicts resolved):
@@ -61,10 +59,8 @@ ok 2 - yep
 # third test
 ok 3 - yep
 
-# two-one
 not ok 4 - fail
-# two-two
-ok 5 - yep
+ok 5 - just fine
 1..5
 ```
 
