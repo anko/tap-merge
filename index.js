@@ -17,22 +17,22 @@ module.exports = function() {
 
     function renumber(line) {
 
-        var m;
+        var match;
 
         // Matches assert
-        if (m = line.match(/^((?:not )?ok)(?:\s+(\d+))?\s+(.*)$/)) {
+        if (match = line.match(/^((?:not )?ok)(?:\s+(\d+))?\s+(.*)$/)) {
 
-            var okString = m[1];
-            var id       = parseInt(m[2], 10);
-            var rest     = m[3];
+            var okString = match[1];
+            var id       = parseInt(match[2], 10);
+            var rest     = match[3];
             var nextId = ++previousId;
             return okString + " " + nextId + " " + rest;
 
         // Matches plan
-        } else if (m = line.match(/^(\d+)..(\d+)$/)) {
+        } else if (match = line.match(/^(\d+)..(\d+)$/)) {
 
-            var start = parseInt(m[1], 10);
-            var end   = parseInt(m[2], 10);
+            var start = parseInt(match[1], 10);
+            var end   = parseInt(match[2], 10);
             plan.start = start;
             plan.end   += end;
             nextId = start;
