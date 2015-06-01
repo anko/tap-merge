@@ -12,7 +12,7 @@ is left alone, so extras like YAML blocks or subtests will work.
 
 ## CLI usage
 
-    tap-merge <(tapProducer1) <(tapProducer2)
+    cat <(tapProducer1) <(tapProducer2) | tap-merge
 
 or otherwise concatenate two TAP streams and feed them on `stdin` to
 `tap-merge`.
