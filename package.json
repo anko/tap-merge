@@ -16,6 +16,12 @@
   ],
   "repository": "anko/tap-merge",
   "bugs": "https://github.com/anko/tap-merge/issues",
+  "keywords": [
+      "TAP",
+      "Test Anything Protocol",
+      "merge",
+      "stream"
+  ],
   "author": "An <an@cyan.io>",
   "license": "ISC",
   "dependencies": {
