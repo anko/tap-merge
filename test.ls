@@ -32,8 +32,7 @@ tap2 = -> test-stream do
   # Hello again
   ok 2 - what else
   """
-
-tap2fail = -> test-stream do
+tap2-fail = -> test-stream do
   """
   TAP version 13
   1..2
@@ -42,8 +41,7 @@ tap2fail = -> test-stream do
   # Hello again
   not ok 2 - FAIL
   """
-
-tap2stuff = -> test-stream do
+tap2-stuff = -> test-stream do
   """
   TAP version 13
   1..2
@@ -89,7 +87,7 @@ test "single stream passthrough" (t) ->
 
 test "single stream passthrough with yaml and child tests" (t) ->
   t.plan 1
-  tap2stuff!
+  tap2-stuff!
     .pipe tap-merge!
     .pipe concat (output) ->
       t.equals do
@@ -139,7 +137,7 @@ test "two streams passthrough" (t) ->
 test "two streams passthrough (first fails one)" (t) ->
   t.plan 1
   c = combined.create!
-    ..append tap2fail!
+    ..append tap2-fail!
     ..append test-stream "\n"
     ..append tap2!
 
