@@ -1,6 +1,6 @@
-# tap-merge
+# tap-merge [![Travis CI status](https://img.shields.io/travis/anko/tap-merge.svg?style=flat-square)][1]
 
-Merge [TAP 13][1] streams.
+Merge [TAP 13][2] streams.
 
 Re-numbers tests and test plans to remove conficts.  The test plan (e.g.
 `1..5`) line is emitted last.  Can be used from the command line or as a
@@ -68,7 +68,8 @@ Output (one TAP stream; conflicts resolved):
 
 Doesn't do validation.  Provide valid input.
 
-## [ISC license][2]
+## [ISC license][3]
 
-[1]: https://testanything.org/tap-version-13-specification.html
-[2]: http://en.wikipedia.org/wiki/ISC_license
+[1]: https://travis-ci.org/anko/tap-merge
+[2]: https://testanything.org/tap-version-13-specification.html
+[3]: http://en.wikipedia.org/wiki/ISC_license
