@@ -4,7 +4,11 @@ Merge [TAP 13][1] streams.
 
 Re-numbers tests and test plans to remove conficts.  The test plan (e.g.
 `1..5`) line is emitted last.  Can be used from the command line or as a
-module.
+module.  Streams everything, so it can process concurrently with the TAP
+producers.
+
+Only asserts, plans and the version header lines are parsed.  Everything else
+is left alone, so extras like YAML blocks or subtests will work.
 
 ## CLI usage
 
@@ -67,7 +71,7 @@ ok 5 - just fine
 
 ## Limitations
 
-**Doesn't do validation.**  Provide valid input.
+Doesn't do validation.  Provide valid input.
 
 ## [ISC license][2]
 
