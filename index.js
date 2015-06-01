@@ -6,7 +6,6 @@ module.exports = function() {
 
     var plan = { start : 0, end : 0 };
     var previousId = 0;
-
     var seenFirstVersionHeader = false;
 
     return _.pipeline(_.split(),
@@ -50,7 +49,7 @@ module.exports = function() {
             push(err);
             next();
         } else if (x === _.nil) { // Ended
-            push(null, "" + (plan.start ? plan.start : 0) + ".." + plan.end);
+            push(null, "" + (plan.start || 0) + ".." + plan.end);
             push(null, x);
         } else {
             push(null, x);
