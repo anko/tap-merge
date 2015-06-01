@@ -1,6 +1,6 @@
-# tap-merge [![Travis CI status](https://img.shields.io/travis/anko/tap-merge.svg?style=flat-square)][1]
+# tap-merge [![Travis CI status](https://img.shields.io/travis/anko/tap-merge.svg?style=flat-square)][1] [![npm package version](https://img.shields.io/npm/v/tap-merge.svg?style=flat-square)][2]
 
-Merge [TAP 13][2] streams.
+Merge [TAP 13][3] streams.
 
 Re-numbers tests and test plans to remove conficts.  The test plan (e.g.
 `1..5`) line is emitted last.  Can be used from the command line or as a
@@ -70,8 +70,9 @@ Doesn't do validation.  Provide valid input.
 
 ## License
 
-[ISC][3].
+[ISC][4].
 
 [1]: https://travis-ci.org/anko/tap-merge
-[2]: https://testanything.org/tap-version-13-specification.html
-[3]: http://en.wikipedia.org/wiki/ISC_license
+[2]: https://www.npmjs.com/package/tap-merge
+[3]: https://testanything.org/tap-version-13-specification.html
+[4]: http://en.wikipedia.org/wiki/ISC_license
