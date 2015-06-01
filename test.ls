@@ -32,6 +32,13 @@ tap2 = -> test-stream do
   # Hello again
   ok 2 - what else
   """
+tap2-no-descriptions = -> test-stream do
+  """
+  TAP version 13
+  1..2
+  ok 1 - one
+  ok 2 - two
+  """
 tap2-fail = -> test-stream do
   """
   TAP version 13
@@ -104,6 +111,21 @@ test "single stream passthrough with yaml and child tests" (t) ->
             1..2
             ok 1 - yep
             ok 2 - yep2
+        1..2
+        """
+      t.end!
+
+test "single stream passthrough with no descriptions" (t) ->
+  t.plan 1
+  tap2-no-descriptions!
+    .pipe tap-merge!
+    .pipe concat (output) ->
+      t.equals do
+        output.to-string!trim!
+        """
+        TAP version 13
+        ok 1 - one
+        ok 2 - two
         1..2
         """
       t.end!
