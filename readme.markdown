@@ -22,6 +22,53 @@ process.stdin              // or any other readable stream
     .pipe(process.stdout); // or any other writable stream
 ```
 
+## Example
+
+<!-- !test program ./cli.js | head -c -1 -->
+
+Input (two TAP streams, one after the other):
+
+<!-- !test in example -->
+
+```
+TAP version 13
+1..3
+# first test
+ok 1 - yep
+# second test
+ok 2 - yep
+# third test
+ok 3 - yep
+
+TAP version 13
+1..2
+# two-one
+not ok 1 - fail
+# two-two
+ok 2 - yep
+```
+
+Output (one TAP stream; conflicts resolved):
+
+<!-- !test out example -->
+
+```
+TAP version 13
+# first test
+ok 1 - yep
+# second test
+ok 2 - yep
+# third test
+ok 3 - yep
+
+# two-one
+not ok 4 - fail
+# two-two
+ok 5 - yep
+1..5
+```
+
+
 ## Limitations
 
 **Doesn't do validation.**  Provide valid input.

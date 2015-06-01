@@ -4,7 +4,8 @@
   "description": "Merge multiple TAP streams into one",
   "main": "index.js",
   "scripts": {
-    "test": "lsc test.ls"
+    "test": "lsc test.ls",
+    "test-readme": "txm readme.markdown"
   },
   "bin": {
     "tap-merge": "./cli.js"
@@ -24,6 +25,7 @@
     "concat-stream": "^1.4.8",
     "event-stream": "^3.3.0",
     "tape": "^4.0.0",
+    "tests-ex-markdown": "^1.2.0",
     "through2": "^0.6.5"
   }
 }
