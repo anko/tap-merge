@@ -68,7 +68,9 @@ Output (one TAP stream; conflicts resolved):
 
 Doesn't do validation.  Provide valid input.
 
-## [ISC license][3]
+## License
+
+[ISC][3].
 
 [1]: https://travis-ci.org/anko/tap-merge
 [2]: https://testanything.org/tap-version-13-specification.html
