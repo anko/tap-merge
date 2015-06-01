@@ -34,40 +34,35 @@ Input (two TAP streams, one after the other):
 
 <!-- !test in example -->
 
-```
-TAP version 13
-1..3
-# first test
-ok 1 - yep
-# second test
-ok 2 - yep
-# third test
-ok 3 - yep
+    TAP version 13
+    1..3
+    # first test
+    ok 1 - yep
+    # second test
+    ok 2 - yep
+    # third test
+    ok 3 - yep
 
-TAP version 13
-1..2
-not ok 1 - fail
-ok 2 - just fine
-```
+    TAP version 13
+    1..2
+    not ok 1 - fail
+    ok 2 - just fine
 
 Output (one TAP stream; conflicts resolved):
 
 <!-- !test out example -->
 
-```
-TAP version 13
-# first test
-ok 1 - yep
-# second test
-ok 2 - yep
-# third test
-ok 3 - yep
+    TAP version 13
+    # first test
+    ok 1 - yep
+    # second test
+    ok 2 - yep
+    # third test
+    ok 3 - yep
 
-not ok 4 - fail
-ok 5 - just fine
-1..5
-```
-
+    not ok 4 - fail
+    ok 5 - just fine
+    1..5
 
 ## Limitations
 
