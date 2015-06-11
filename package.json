@@ -1,6 +1,6 @@
 {
   "name": "tap-merge",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Merge multiple TAP streams into one",
   "main": "index.js",
   "scripts": {
