@@ -1,9 +1,9 @@
-test      = require \tape
-tap-merge = require \./index.js
-through   = require \through2
-concat    = require \concat-stream
-es        = require \event-stream
-combined  = require \combined-stream
+test         = require \tape
+tap-merge    = require \./index.js
+through      = require \through2
+concat       = require \concat-stream
+es           = require \event-stream
+multistream  = require \multistream
 
 # Create a dummy stream for given output
 test-stream = (output) ->
@@ -132,10 +132,11 @@ test "single stream passthrough with no descriptions" (t) ->
 
 test "two streams passthrough" (t) ->
   t.plan 1
-  c = combined.create!
-    ..append tap2!
-    ..append test-stream "\n"
-    ..append tap2!
+  c = multistream [
+    tap2!
+    test-stream "\n"
+    tap2!
+  ]
 
   c
     .pipe tap-merge!
@@ -158,10 +159,11 @@ test "two streams passthrough" (t) ->
 
 test "two streams passthrough (first fails one)" (t) ->
   t.plan 1
-  c = combined.create!
-    ..append tap2-fail!
-    ..append test-stream "\n"
-    ..append tap2!
+  c = multistream [
+    tap2-fail!
+    test-stream "\n"
+    tap2!
+  ]
 
   c
     .pipe tap-merge!
