@@ -20,11 +20,14 @@ or otherwise concatenate two TAP streams and feed them on `stdin` to
 ## Module usage
 
 ```js
-var taps = require("tap-stream")
-process.stdin              // or any other readable stream
-    .pipe(taps())
-    .pipe(process.stdout); // or any other writable stream
+var tapMerge = require("tap-merge");
+process.stdin              // or any readable stream
+    .pipe(tapMerge())
+    .pipe(process.stdout); // or any writable stream
 ```
+
+If you want to give it multiple streams one after the other, use a module like
+[multistream][4].
 
 ## Example
 
@@ -70,9 +73,10 @@ Doesn't do validation.  Provide valid input.
 
 ## License
 
-[ISC][4].
+[ISC][5].
 
 [1]: https://travis-ci.org/anko/tap-merge
 [2]: https://www.npmjs.com/package/tap-merge
 [3]: https://testanything.org/tap-version-13-specification.html
-[4]: http://en.wikipedia.org/wiki/ISC_license
+[4]: https://www.npmjs.com/package/multistream
+[5]: http://en.wikipedia.org/wiki/ISC_license
