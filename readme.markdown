@@ -2,7 +2,7 @@
 
 Merge [TAP 13][3] streams.
 
-Re-numbers tests and test plans to remove conficts.  The test plan (e.g.
+Re-numbers tests and test plans to remove conflicts.  The test plan (e.g.
 `1..5`) line is emitted last.  Can be used from the command line or as a
 module.  Streams everything, so it can process concurrently with the TAP
 producers.
