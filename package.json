@@ -22,7 +22,7 @@
     "merge",
     "stream"
   ],
-  "author": "An <an@cyan.io>",
+  "author": "Antti Korpi <an@cyan.io>",
   "license": "ISC",
   "dependencies": {
     "highland": "^2.5.1"
