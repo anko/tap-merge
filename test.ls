@@ -183,3 +183,20 @@ test "two streams passthrough (first fails one)" (t) ->
         1..4
         """
       t.end!
+
+test "writing to tapMerge using .write and .end works" (t) ->
+  t.plan 1
+  tap-merge!
+    ..pipe concat (output) ->
+      t.equals do
+        output.to-string!trim!
+        """
+        TAP version 13
+        ok 1 - hi
+        1..1
+        """
+      t.end!
+    ..write 'TAP version 13\n'
+    ..write 'ok 1 - hi\n'
+    ..write '1..1'
+    ..end!
